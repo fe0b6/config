@@ -167,10 +167,10 @@ func get(i interface{}, k ...string) (intr interface{}) {
 		if key == k[0] {
 			if len(k) == 1 {
 				return val
-			} else {
-				l := k[1:]
-				return get(val, l...)
 			}
+
+			l := k[1:]
+			return get(val, l...)
 		}
 	}
 
