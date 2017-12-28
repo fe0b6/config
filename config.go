@@ -99,6 +99,28 @@ func GetMapSilent(silent bool, k ...string) (str map[string]interface{}) {
 	return
 }
 
+// Получаем значение среза строк
+func GetMapStr(k ...string) (str map[string]string) {
+	return GetMapStrSilent(false, k...)
+}
+
+// Получаем значение среза строк
+func GetMapStrSilent(silent bool, k ...string) (str map[string]string) {
+
+	a := getSilent(silent, confData, k...)
+	if a == nil {
+		return
+	}
+
+	str, ok := a.(map[string]string)
+	if !ok {
+		log.Println("[error]", "value not map[string]string", a)
+		return
+	}
+
+	return
+}
+
 // Получаем значение int
 func GetInt(k ...string) (i int) {
 	return GetIntSilent(false, k...)
