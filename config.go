@@ -77,6 +77,28 @@ func GetStrArrSilent(silent bool, k ...string) (str []string) {
 	return
 }
 
+// Получаем значение среза строк
+func GetMap(k ...string) (str map[string]interface{}) {
+	return GetMapSilent(false, k...)
+}
+
+// Получаем значение среза строк
+func GetMapSilent(silent bool, k ...string) (str map[string]interface{}) {
+
+	a := getSilent(silent, confData, k...)
+	if a == nil {
+		return
+	}
+
+	str, ok := a.(map[string]interface{})
+	if !ok {
+		log.Println("[error]", "value not map[string]interface{}", a)
+		return
+	}
+
+	return
+}
+
 // Получаем значение int
 func GetInt(k ...string) (i int) {
 	return GetIntSilent(false, k...)
