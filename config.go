@@ -112,10 +112,19 @@ func GetMapStrSilent(silent bool, k ...string) (str map[string]string) {
 		return
 	}
 
-	str, ok := a.(map[string]string)
+	arr, ok := a.(map[string]interface{})
 	if !ok {
-		log.Println("[error]", "value not map[string]string", a)
+		log.Println("[error]", "value not map[string]interface{}", a)
 		return
+	}
+
+	str = make(map[string]string)
+	for k, v := range arr {
+		str[k], ok = v.(string)
+		if !ok {
+			log.Println("[error]", "value not map[string]string", a)
+			return
+		}
 	}
 
 	return
