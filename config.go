@@ -178,6 +178,28 @@ func GetInt64Silent(silent bool, k ...string) (i int64) {
 	return
 }
 
+// Получаем значение int
+func GetFloat64(k ...string) (i float64) {
+	return GetFloat64Silent(false, k...)
+}
+
+// Получаем значение строку
+func GetFloat64Silent(silent bool, k ...string) (i float64) {
+
+	a := getSilent(silent, confData, k...)
+	if a == nil {
+		return
+	}
+
+	i, ok := a.(float64)
+	if !ok {
+		log.Println("[error]", "value not float64", a)
+		return
+	}
+
+	return
+}
+
 // Получаем значение bool
 func GetBool(k ...string) (str bool) {
 	return GetBoolSilent(false, k...)
