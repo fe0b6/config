@@ -10,7 +10,7 @@ var (
 	confData interface{}
 )
 
-// Читаем конфиг
+// Read - Читаем конфиг
 func Read(file string) (err error) {
 	b, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -27,12 +27,12 @@ func Read(file string) (err error) {
 	return
 }
 
-// Получаем значение строку
+// GetStr - Получаем значение строку
 func GetStr(k ...string) (str string) {
 	return GetStrSilent(false, k...)
 }
 
-// Получаем значение строку
+// GetStrSilent - Получаем значение строку
 func GetStrSilent(silent bool, k ...string) (str string) {
 
 	a := getSilent(silent, confData, k...)
@@ -49,12 +49,12 @@ func GetStrSilent(silent bool, k ...string) (str string) {
 	return
 }
 
-// Получаем значение среза строк
+// GetStrArr - Получаем значение среза строк
 func GetStrArr(k ...string) (str []string) {
 	return GetStrArrSilent(false, k...)
 }
 
-// Получаем значение среза строк
+// GetStrArrSilent - Получаем значение среза строк
 func GetStrArrSilent(silent bool, k ...string) (str []string) {
 
 	a := getSilent(silent, confData, k...)
@@ -77,12 +77,12 @@ func GetStrArrSilent(silent bool, k ...string) (str []string) {
 	return
 }
 
-// Получаем значение среза строк
+// GetMap - Получаем значение среза строк
 func GetMap(k ...string) (str map[string]interface{}) {
 	return GetMapSilent(false, k...)
 }
 
-// Получаем значение среза строк
+// GetMapSilent - Получаем значение среза строк
 func GetMapSilent(silent bool, k ...string) (str map[string]interface{}) {
 
 	a := getSilent(silent, confData, k...)
@@ -99,12 +99,12 @@ func GetMapSilent(silent bool, k ...string) (str map[string]interface{}) {
 	return
 }
 
-// Получаем значение среза строк
+// GetMapStr - Получаем значение среза строк
 func GetMapStr(k ...string) (str map[string]string) {
 	return GetMapStrSilent(false, k...)
 }
 
-// Получаем значение среза строк
+// GetMapStrSilent - Получаем значение среза строк
 func GetMapStrSilent(silent bool, k ...string) (str map[string]string) {
 
 	a := getSilent(silent, confData, k...)
@@ -130,12 +130,43 @@ func GetMapStrSilent(silent bool, k ...string) (str map[string]string) {
 	return
 }
 
-// Получаем значение int
+// GetMapInt - Получаем значение среза строк
+func GetMapInt(k ...string) (str map[string]int) {
+	return GetMapIntSilent(false, k...)
+}
+
+// GetMapIntSilent - Получаем значение среза строк
+func GetMapIntSilent(silent bool, k ...string) (str map[string]int) {
+
+	a := getSilent(silent, confData, k...)
+	if a == nil {
+		return
+	}
+
+	arr, ok := a.(map[string]interface{})
+	if !ok {
+		log.Println("[error]", "value not map[string]interface{}", a)
+		return
+	}
+
+	str = make(map[string]int)
+	for k, v := range arr {
+		str[k], ok = v.(int)
+		if !ok {
+			log.Println("[error]", "value not map[string]int", a)
+			return
+		}
+	}
+
+	return
+}
+
+// GetInt - Получаем значение int
 func GetInt(k ...string) (i int) {
 	return GetIntSilent(false, k...)
 }
 
-// Получаем значение строку
+// GetIntSilent - Получаем значение строку
 func GetIntSilent(silent bool, k ...string) (i int) {
 
 	a := getSilent(silent, confData, k...)
@@ -154,12 +185,12 @@ func GetIntSilent(silent bool, k ...string) (i int) {
 	return
 }
 
-// Получаем значение int
+// GetInt64 - Получаем значение int
 func GetInt64(k ...string) (i int64) {
 	return GetInt64Silent(false, k...)
 }
 
-// Получаем значение строку
+// GetInt64Silent - Получаем значение строку
 func GetInt64Silent(silent bool, k ...string) (i int64) {
 
 	a := getSilent(silent, confData, k...)
@@ -178,12 +209,12 @@ func GetInt64Silent(silent bool, k ...string) (i int64) {
 	return
 }
 
-// Получаем значение int
+// GetFloat64 - Получаем значение int
 func GetFloat64(k ...string) (i float64) {
 	return GetFloat64Silent(false, k...)
 }
 
-// Получаем значение строку
+// GetFloat64Silent - Получаем значение строку
 func GetFloat64Silent(silent bool, k ...string) (i float64) {
 
 	a := getSilent(silent, confData, k...)
@@ -200,12 +231,12 @@ func GetFloat64Silent(silent bool, k ...string) (i float64) {
 	return
 }
 
-// Получаем значение bool
+// GetBool - Получаем значение bool
 func GetBool(k ...string) (str bool) {
 	return GetBoolSilent(false, k...)
 }
 
-// Получаем значение bool
+// GetBoolSilent - Получаем значение bool
 func GetBoolSilent(silent bool, k ...string) (str bool) {
 	a := getSilent(silent, confData, k...)
 	if a == nil {
