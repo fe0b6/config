@@ -14,13 +14,13 @@ var (
 func Read(file string) (err error) {
 	b, err := ioutil.ReadFile(file)
 	if err != nil {
-		log.Fatalln("[fatal]", err)
+		log.Fatalln("[fatal]", "config file", err)
 		return
 	}
 
 	err = json.Unmarshal(b, &confData)
 	if err != nil {
-		log.Fatalln("[fatal]", err)
+		log.Fatalln("[fatal]", "config file", err)
 		return
 	}
 
