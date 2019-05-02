@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"strings"
+	"sync"
 )
 
 var (
 	confData interface{}
+	fileCache sync.Map
 )
 
 // Read - Читаем конфиг
@@ -24,6 +27,24 @@ func Read(file string) (err error) {
 		return
 	}
 
+	return
+}
+
+// GetFile - читаем файл
+func GetFile(k ...string) (b []byte) {
+	key := strings.Join(k, "_")
+	if bi, ok := fileCache.Load(key); ok {
+		b = bi.([]byte)
+		return 
+	}
+
+	b, err := ioutil.ReadFile(GetStr(k...)) 
+	if err != nil {
+		log.Println("[error]",err)
+		return
+	}
+
+	fileCache.Store(key, b)
 	return
 }
 
